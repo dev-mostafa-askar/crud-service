@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Repositories\{{class}}\Eloquent;
+
+use App\Repositories\{{class}}\{{interface}};
+
+class Eloquent{{class}}Repository extends EloquentBaseRepository implements {{interface}}
+{
+    public function adminCreate($data){
+        if(isset($data['image']) && $data['image']){
+            $data['image']  = $this->saveImage($data['image'], '{{class}}images');
+        }
+        return $this->create();
+    }
+
+      public function adminUpdate($model,$data){
+            $data['link'] = '';
+            if(isset($data['image']) && !empty($data['image'])){
+                if($model->image != $data['image']){
+                    $data['image'] = $this->saveImage($data['image'], '{{class}}images');
+                    Storage::disk('public')->delete($model->image);
+                }else{
+                    $data['image'] = $model->image;
+                }
+            }else{
+                $data['image'] = $model->image;
+            }
+        return $this->update($model,$data);
+  }
+
+    public function adminDelete($model){
+        Storage::disk('public')->delete($model->image ?? '');
+        $model->delete();
+    }
+}

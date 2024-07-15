@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Http\Controllers\API\Owner;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\{{class}}\List{{class}}Request;
+use App\Http\Requests\{{class}}\Store{{class}}Request;
+use App\Http\Requests\{{class}}\Update{{class}}Request;
+use App\Repositories\{{class}}\{{class}}Repository;
+use App\Transformers\{{class}}\Show{{class}}Transformer;
+use Illuminate\Http\Response;
+
+class {{class}}Controller extends Controller
+{
+    public function __construct(private {{class}}Repository ${{lowerName}}Repository)
+    {  
+        $this->{{lowerName}}Repository = ${{lowerName}}Repository;
+    }
+
+    public function index(List{{class}}Request ${{lowerName}}){
+        ${{lowerName}}s = $this->{{lowerName}}Repository->all();
+        return responder()->success(${{lowerName}}s, Show{{class}}Transformer::class)->respond(Response::HTTP_OK);
+    }
+
+    public function store(Store{{class}}Request $request){
+        $created{{class}} = $this->{{lowerName}}Repository->adminCreate($request->validated());
+        return responder()->success($created{{class}}, Show{{class}}Transformer::class)->respond(Response::HTTP_CREATED);
+    }
+
+    public function show(${{lowerName}}_id)
+    {
+        ${{lowerName}} = $this->{{lowerName}}Repository->find(${{lowerName}}_id);
+        return responder()->success(${{lowerName}}, Show{{class}}Transformer::class)->respond(Response::HTTP_OK);
+    }
+
+    public function update(Update{{class}}Request $request, ${{lowerName}}_id){
+        ${{lowerName}} = $this->{{lowerName}}Repository->find(${{lowerName}}_id);
+        $this->{{lowerName}}Repository->update{{class}}($request->validated(), ${{lowerName}});
+        return responder()->success(${{lowerName}}, Show{{class}}Transformer::class)->respond(Response::HTTP_OK);
+    }
+
+    public function delete(${{lowerName}}_id){
+        ${{lowerName}} = $this->{{lowerName}}Repository->find(${{lowerName}}_id);
+        $this->{{lowerName}}Repository->adminDelete(${{lowerName}});
+        return responder()->success(['message'=>"{{class}} has been deleted successfully"]);
+    }
+}

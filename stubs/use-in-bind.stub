@@ -1,0 +1,4 @@
+    use App\Models\{{class}};
+    use App\Repositories\{{class}}\Eloquent\Eloquent{{class}}Repository;
+    use App\Repositories\{{class}}\{{class}}Repository;
+    

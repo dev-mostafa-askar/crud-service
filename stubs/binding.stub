@@ -1,0 +1,3 @@
+$this->app->bind({{interface}}::class, function(){
+        return new Eloquent{{interface}}(new {{class}});
+    });

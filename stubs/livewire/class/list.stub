@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Livewire\{{class}};
+
+use App\Repositories\Competition\CompetitionRepository;
+use App\Repositories\{{class}}\{{class}}Repository;
+use Livewire\Component;
+
+class List{{class}}s extends Component
+{
+    protected $paginationTheme = 'bootstrap';
+    public $delete_id;
+    protected $listeners=["refreshParent" => '$refresh'];
+
+    public function render({{class}}Repository ${{lowerName}}Repository)
+    {
+        ${{lowerName}}s = ${{lowerName}}Repository->all();
+        ${{lowerName}}s = ${{lowerName}}Repository->paginate(${{lowerName}}s);
+        return view('livewire.{{lowerName}}.list-{{lowerName}}s',compact('{{lowerName}}s'))
+        ->extends('layouts.layout')
+        ->section('content');
+    }
+
+    public function edit(${{lowerName}}){
+        $this->dispatch('get{{class}}Data' ,${{lowerName}}['id']);
+        $this->dispatch('show-modal', 'edit-{{lowerName}}-modal');
+    }
+
+    public function deleteId(${{lowerName}}){
+        $this->delete_id = ${{lowerName}}['id'];
+    }
+
+    public function delete({{class}}Repository ${{lowerName}}Repository){
+        ${{lowerName}} = ${{lowerName}}Repository->find($this->delete_id);
+        if(${{lowerName}}){
+            ${{lowerName}}Repository->delete(${{lowerName}});
+            $this->dispatch('hide-modal','create-{{loweName}}-modal');
+            $this->dispatch('show-modal-notify','deleted-success');
+            $this->dispatch('refreshParent');
+        }else{
+            $this->dispatch('show-modal-notify','cant-delete');
+            $this->dispatch('refreshParent');
+        }
+    }
+
+}

@@ -1,0 +1,68 @@
+<div>
+    <div class="modal fade" id="create-{{lowerName}}-modal" wire:ignore.self>
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content" style="position: relative">
+                <div wire:loading wire:target="image"
+                style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; backg{{lowerName}}-color: rgba(185, 184, 184, 0.371);z-index: 999;">
+                    <div class="loader" style=" margin: auto;margin-left: 50%;margin-top: 15%; " >
+                        <div class="loader-wheel"></div>
+                        <div class="loader-text"></div>
+                    </div>
+                </div>
+                <div class="modal-header">
+                    <h4 class="modal-title">Add New {{class}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action='#' wire:submit.prevent="submit">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="name">Name</label>
+                                    <input wire:model.defer='name' type="text" class="form-control"
+                                        id="name" placeholder="{{class}} name">
+                                    @if ($errors->has('name'))
+                                        <p style="color: red;">{{ $errors->first('name') }}</p>
+                                    @endif
+
+                                </div>
+
+                            </div>
+
+                              <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="cover">{{class}} image</label>
+                                    <input wire:model.defer='image' type="file" class="form-control"
+                                        id="cover" placeholder="Image">
+                                    @if ($errors->has('image'))
+                                        <p style="color: red;">{{ $errors->first('image') }}</p>
+                                    @endif
+                                </div>
+                            </div>
+                            <!-- inputs tags here -->
+                           
+                        </div>
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="modal-footer text-right">
+                    <button type="submit" class="btn btn-success ">Save</button>
+
+
+                </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group text-right">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-{{lowerName}}-modal">
+            Add New {{class}}
+        </button>
+    </div>
+
+</div>

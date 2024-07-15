@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Repositories\{{class}};
+
+interface {{interface}} extends BaseRepository
+{
+    public function adminCreate($data);
+    public function adminUpdate($data, $modal);
+    public function adminDelete($model);
+}

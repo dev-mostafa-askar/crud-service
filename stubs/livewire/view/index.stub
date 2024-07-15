@@ -1,0 +1,70 @@
+<div>
+
+    <x-page-header title="{{class}} " /> 
+
+
+    @livewire('{{lowerName}}.create-{{lowerName}}-modal',['competition_id' => $competition->id])
+    @livewire('{{lowerName}}.edit-{{lowerName}}-modal')
+    @include('livewire.common.delete-component')
+    @include('livewire.common.create-component')
+    @include('livewire.common.delete-notify-component')
+    @include('livewire.common.update-component')
+    @include('livewire.common.not-found-component')
+    @include('livewire.common.cant-delete-component')
+
+    @if (session()->has('cant-create'))
+        <p class="alert alert-danger">{{session()->get('cant-create')}}</p>
+    @endif
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+
+                <!-- /.card-header -->
+                <div class="card-body" style="padding: 0px">
+                    <table id="dataTableForAll" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                               
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (${{lowerName}}s->count() === 0)
+                                <tr style="text-align: center">
+                                    <td colspan="8">No items found</td>
+                                </tr>
+                             @else
+                            @foreach (${{lowerName}}s as $inx => ${{lowerName}})
+                                <tr>
+                                    <td><a href="">{{ $inx + 1 }}</a></td>
+                                   
+                                    <td>
+
+                                        <button wire:click='edit({{ ${{lowerName}} }})'
+                                            class="btn  btn-sm">
+                                            <i class="fa fa-pen"></i>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            @endforeach
+                            @endif
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="card-footer clearfix"></div>
+                {{${{lowerName}}s->links()}}
+
+
+            </div>
+            <!-- /.card -->
+
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+
+    </div>
+</div>
